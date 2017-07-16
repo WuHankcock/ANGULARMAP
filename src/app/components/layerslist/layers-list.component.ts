@@ -2,8 +2,11 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { EsriLoaderService } from 'angular-esri-loader';
+
+import { LayersListTreeService } from '../../services/layers-list-tree.service';
+
 import store from '../../store';
-import  "../../../assets/libs/ztree/jquery.ztree.all.min";
+import "../../../assets/libs/ztree/jquery.ztree.all.min";
 declare global {
     interface Window {
         $: any;
@@ -24,51 +27,56 @@ declare global {
 
             transition('* => *', animate(500))
         ])
-    ]
+    ],
+    providers: [EsriLoaderService, LayersListTreeService]
 })
 
 export class LayersListComponent {
     showTreeContainer: boolean = false;
     zTreeObj: any;
     signal: string;
-    constructor(private esriLoader: EsriLoaderService) { }
+    constructor(private esriLoader: EsriLoaderService, public service: LayersListTreeService) {
+        this.service.getData().subscribe((data: any) => {
+            this.addNodeToTree(data);
+        });
+    }
 
     ngOnInit() {
         // this.esriLoader.loadModules([
-            
+
         // ]).then(([]) => {
-            if (!this.zTreeObj) {
-                var setting = {
-                    check: {
-                        enable: true,
-                        autoCheckTrigger: false
-                        //autoCheckTrigger: true
-                    },
-                    callback: {
-                        onCheck: this._zTreeOnCheck.bind(this)
-                    },
+        if (!this.zTreeObj) {
+            var setting = {
+                check: {
+                    enable: true,
+                    autoCheckTrigger: false
+                    //autoCheckTrigger: true
+                },
+                callback: {
+                    onCheck: this._zTreeOnCheck.bind(this)
+                },
 
-                    data: {
-                        simpleData: {
-                            enable: true
-                        }
-                    },
-
-                    view: {
-                        showLine: false,
-                        showIcon: true,
-                        selectedMulti: true
+                data: {
+                    simpleData: {
+                        enable: true
                     }
-                };
-                var zNodes = [
-                    { "id": 1, "pId": 0, "name": "图层", "checked": true },
-                    { "id": 10, "pId": 1, "name": "地理信息", "checked": true },
-                    { "id": 101, "pId": 10, "name": "地名", "layerId": "TDTAnnoLayer", "checked": true, "basemap": true },
-                    { "id": 102, "pId": 10, "name": "边界", "layerId": "BoundariesLayer", "checked": true, "basemap": true },
-                    { "id": 11, "pId": 1, "name": "个人图层", "checked": true },
-                ];
-                this.zTreeObj = window.$.fn.zTree.init(window.$('#layersTree'), setting, zNodes);
-            }
+                },
+
+                view: {
+                    showLine: false,
+                    showIcon: true,
+                    selectedMulti: true
+                }
+            };
+            var zNodes = [
+                { "id": 1, "pId": 0, "name": "图层", "checked": true },
+                { "id": 10, "pId": 1, "name": "地理信息", "checked": true },
+                { "id": 101, "pId": 10, "name": "地名", "layerId": "TDTAnnoLayer", "checked": true, "basemap": true },
+                { "id": 102, "pId": 10, "name": "边界", "layerId": "BoundariesLayer", "checked": true, "basemap": true },
+                { "id": 11, "pId": 1, "name": "个人图层", "checked": true },
+            ];
+            this.zTreeObj = window.$.fn.zTree.init(window.$('#layersTree'), setting, zNodes);
+        }
 
         // })
     }
@@ -97,6 +105,7 @@ export class LayersListComponent {
                 }
             });
         }
+        this.service.setData({ "name": "添加测试", "checked": true });
     }
 
     switch(flg) {
@@ -125,7 +134,7 @@ export class LayersListComponent {
 
     addNodeToTree(node) {
         var tree = this.zTreeObj;
-        var parentNode = tree.getNodes()[1];
+        var parentNode = tree.getNodes()[0].children[1];
         node.checked = true;
         tree.addNodes(parentNode, node);
         tree.refresh();
