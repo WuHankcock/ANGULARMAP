@@ -1,0 +1,9 @@
+<div>
+    <div #layerslist class="layerlist" (click)='showTreeContainer=!showTreeContainer;switch(showTreeContainer)'>
+        <span class="esri-icon-layer-list esri-icon"></span>
+    </div>
+    <!-- *ngIf='showTreeContainer' -->
+    <div #treeContainer  class="treeContainer" [@signal]="signal">
+        <div #layersTree id='layersTree' class="ztree"></div>
+    </div>
+</div>

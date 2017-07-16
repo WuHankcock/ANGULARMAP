@@ -39,6 +39,7 @@ export class HomeComponent {
                 }
             });
             this.homeBtn.go().then(() => {
+                this.homeBtn.view.center = [106, 35]
                 this.homeBtn.destroy();
             });
         })

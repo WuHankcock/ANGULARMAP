@@ -6,6 +6,7 @@ import { BasemapToggleComponent } from './components/basemaptoggle/basemap-toggl
 import { LocateComponent } from './components/locate/locate.component';
 import { HomeComponent } from './components/home/home.component';
 import { PrintComponent } from './components/print/print.component';
+import {LayersListComponent} from './components/layerslist/layers-list.component';
 
 @Component({
   selector: 'app-root',

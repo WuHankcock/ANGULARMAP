@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EsriLoaderModule } from 'angular-esri-loader';
 
 import { AppComponent } from './app.component';
@@ -8,6 +11,7 @@ import { BasemapToggleComponent } from './components/basemaptoggle/basemap-toggl
 import { LocateComponent } from './components/locate/locate.component';
 import { HomeComponent } from './components/home/home.component';
 import { PrintComponent } from './components/print/print.component';
+import {LayersListComponent} from './components/layerslist/layers-list.component';
 
 @NgModule({
   declarations: [
@@ -16,11 +20,14 @@ import { PrintComponent } from './components/print/print.component';
     BasemapToggleComponent,
     LocateComponent,
     HomeComponent,
-    PrintComponent
+    PrintComponent,
+    LayersListComponent
   ],
   imports: [
     BrowserModule,
-    EsriLoaderModule
+    EsriLoaderModule,
+    CommonModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
