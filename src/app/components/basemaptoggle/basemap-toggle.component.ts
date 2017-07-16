@@ -37,7 +37,7 @@ export class BasemapToggleComponent {
                 "id": "BoundariesLayer"
             });
             var nextBasemap = new Basemap({
-                baseLayers: [tdtLayer, tdtannoLayer, BoundariesLayer],
+                baseLayers: [BoundariesLayer, tdtannoLayer, tdtLayer],
                 title: 'chinaImg',
                 id: 'chinaImg'
             });

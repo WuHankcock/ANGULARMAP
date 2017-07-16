@@ -1,0 +1,19 @@
+.locate{
+  /* background-color: #fff; */
+  background-color: #ffffff !important;
+  opacity: 1;
+  color: #6e6e6e;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 1);
+  text-align: center;
+  line-height: 30px;
+  font-size: 16px;
+  top: 10px;
+  /*background: url(./images/icon.png) center no-repeat;*/
+  position: absolute;
+  top: 243px;
+  left: 15px;
+  z-index: 10
+}
